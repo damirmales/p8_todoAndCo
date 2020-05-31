@@ -135,7 +135,6 @@ class Task
         $this->author = $author;
 
         return $this;
-
     }
 
     /**
@@ -171,5 +170,4 @@ class Task
 
         return $this;
     }
-
 }

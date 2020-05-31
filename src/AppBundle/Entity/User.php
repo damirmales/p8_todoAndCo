@@ -45,16 +45,13 @@ class User implements UserInterface
      */
     private $tasks;
 
-
     /**
      *
      */
     public function __constructor()
     {
-
         $this->tasks = new ArrayCollection();
     }
-
 
     /**
      * @return mixed
@@ -136,7 +133,6 @@ class User implements UserInterface
         $this->tasks = $tasks;
     }
 
-
     /**
      * @param Task $task
      * @return $this
@@ -159,10 +155,8 @@ class User implements UserInterface
         if ($this->tasks->contains($task)) {
             $this->tasks->removeElement($task);
         }
-
         return $this;
     }
-
 
     /**
      * @return string[]
