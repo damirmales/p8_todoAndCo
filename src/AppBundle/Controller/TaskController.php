@@ -29,7 +29,7 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $task->setUser($user);
             $em->persist($task);
@@ -52,10 +52,15 @@ class TaskController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser() === $task->getUser()) {
+                $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', 'La tâche a bien été modifiée.');
+                $this->addFlash('success', 'La tâche a bien été modifiée.');
+
+                return $this->redirectToRoute('task_list');
+            }
+            $this->addFlash('error', 'La tâche ne vous appartient pas.');
 
             return $this->redirectToRoute('task_list');
         }
