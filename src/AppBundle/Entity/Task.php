@@ -41,13 +41,6 @@ class Task
     private $isDone;
 
     /**
-     * @ORM\Column(type="string")
-     * @Assert\NotNull()
-     *
-     */
-    private $author;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tasks")
      */
     private $user;
@@ -116,25 +109,6 @@ class Task
     public function setContent($content)
     {
         $this->content = $content;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param $author
-     * @return $this
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
     }
 
     /**
