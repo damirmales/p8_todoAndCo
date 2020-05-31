@@ -40,6 +40,11 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $role;
+
     /*
      * @OneToMany(targetEntity="Task", mappedBy="user")
      */
@@ -75,6 +80,8 @@ class User implements UserInterface
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -99,6 +106,8 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -115,6 +124,8 @@ class User implements UserInterface
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -131,6 +142,26 @@ class User implements UserInterface
     public function setTasks($tasks)
     {
         $this->tasks = $tasks;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
     }
 
     /**
@@ -142,7 +173,6 @@ class User implements UserInterface
         if (!$this->tasks->contains($task)) {
             $this->tasks[] = $task;
         }
-
         return $this;
     }
 
