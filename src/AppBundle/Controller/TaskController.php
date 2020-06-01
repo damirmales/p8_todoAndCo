@@ -89,11 +89,25 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        if(($task->getUser()->getUsername() == "lambda") &&  ($this->getUser()->getRole() === "ROLE_ADMIN" )){ //check if the task is owned by a default user
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+            $this->addFlash('success', 'La tâche anonyme a bien été supprimée.');
+
+            return $this->redirectToRoute('task_list');
+        }
+        if ($this->getUser() === $task->getUser()) { //check if logged user is the owner of the task
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
+
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
+
+            return $this->redirectToRoute('task_list');
+        }
+        $this->addFlash('error', 'La tâche ne vous appartient pas.');
 
         return $this->redirectToRoute('task_list');
     }
