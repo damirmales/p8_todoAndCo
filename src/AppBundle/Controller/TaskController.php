@@ -89,7 +89,7 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-        if(($task->getUser()->getId() == 4) &&  ($this->getUser()->getRole() === "ROLE_ADMIN" )){ //check if the task is owned by a default user
+        if(($task->getUser()->getUsername() == "lambda") &&  ($this->getUser()->getRole() === "ROLE_ADMIN" )){ //check if the task is owned by a default user
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);
             $em->flush();
