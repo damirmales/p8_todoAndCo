@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\AppBundle\Controller;
-
 
 use AppBundle\Entity\Task;
 use PHPUnit\Framework\TestCase;
