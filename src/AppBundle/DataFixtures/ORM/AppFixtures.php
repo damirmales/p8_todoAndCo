@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\DataFixtures\ORM;
-
+/*
 use AppBundle\Entity\User;
 use AppBundle\Entity\Task;
 
@@ -26,4 +26,4 @@ class AppFixtures  extends Fixture
     {
         // TODO: Implement method() method.
     }
-}
+}*/
