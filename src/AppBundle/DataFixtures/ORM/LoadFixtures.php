@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Fixtures;
@@ -18,30 +17,6 @@ class LoadFixtures implements FixtureInterface
                 'providers' => [$this]
             ]
         );
-    }
-
-    public function genus()
-    {
-        $genera = [
-            'Octopus',
-            'Balaena',
-            'Orcinus',
-            'Hippocampus',
-            'Asterias',
-            'Amphiprion',
-            'Carcharodon',
-            'Aurelia',
-            'Cucumaria',
-            'Balistoides',
-            'Paralithodes',
-            'Chelonia',
-            'Trichechus',
-            'Eumetopias'
-        ];
-
-        $key = array_rand($genera);
-
-        return $genera[$key];
     }
 
     public function title()
