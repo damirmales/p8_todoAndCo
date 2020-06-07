@@ -4,21 +4,21 @@ namespace Tests\AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TaskControllerTest extends TestCase
+//use Symfony\Bundle\SecurityBundle\Tests\Functional\WebTestCase;
+
+//use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
+
+class TaskControllerTest extends WebTestCase
 {
 
     public function testReturnListAction()
     {
-        $task = new Task();
-        $task->setTitle("tache");
-        $task->setContent("tache sachant tacher");
-        $task->setCreatedAt(2020-05-29);
-        $task->setUser("bil");
+        $client = static::createClient();
+        $client->request('GET', '/');
 
-        $this->assertEquals($task->getTitle(),"tache");
-        $this->assertEquals($task->getContent(),"tache sachant tacher");
-        $this->assertEquals($task->getCreatedAt(),2020-05-29);
-        $this->assertEquals($task->getUser(),"bil");
+        echo $client->getResponse()->getContent();
+
     }
 }
