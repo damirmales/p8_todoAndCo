@@ -9,7 +9,7 @@ class TaskControllerTest extends WebTestCase
     private $client = null;
 
     /**
-     *
+     * Create HTTP client
      */
     public function setUp(): void
     {
@@ -20,7 +20,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task list as a user
      */
     public function testTaskListUser()
     {
@@ -29,7 +29,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task list as a admin
      */
     public function testTaskListAdmin()
     {
@@ -42,7 +42,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task creation as a user
      */
     public function testTaskCreateByUser()
     {
@@ -60,7 +60,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task creation as a admin
      */
     public function testTaskCreateByAdmin()
     {
@@ -78,7 +78,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task edition as a user
      */
     public function testTaskEditByUser()
     {
@@ -95,7 +95,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     *
+     * Testing the task edition as a admin
      */
     public function testTaskEditByAdmin()
     {
@@ -111,6 +111,9 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(1, $crawler->filter('html:contains("modifiée.")')->count());
     }
 
+    /**
+     * Testing the task edition as a user but no creator of the task
+     */
     public function testTaskEditByUserNoOwner()
     {
         $crawler = $this->client->request('GET', '/tasks/129/edit', array(), array(), array(
@@ -121,6 +124,9 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(0, $crawler->filter('html:contains("modifier")')->count());
     }
 
+    /**
+     * Testing the task deletion as a admin
+     */
     public function testTaskDelete()
     {
         $this->client->request('GET', '/tasks/145/delete', array(), array(), array(
@@ -132,6 +138,9 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(1, $crawler->filter('html:contains("La tâche a bien été supprimée")')->count());
     }
 
+    /**
+     * Testing the task deletion as a user but no creator of the task
+     */
     public function testTaskDeleteByUserNoOwner()
     {
         $this->client->request('GET', '/tasks/129/delete', array(), array(), array(
@@ -143,6 +152,9 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(1, $crawler->filter('html:contains("La tâche ne vous appartient pas")')->count());
     }
 
+    /**
+     * Testing the task deletion as a user and creator of the task
+     */
     public function testTaskDeleteByUser()
     {
         $this->client->request('GET', '/tasks/141/delete', array(), array(), array(
@@ -154,6 +166,9 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(1, $crawler->filter('html:contains("La tâche a bien été supprimée")')->count());
     }
 
+    /**
+     * Testing the task toggle off by admin
+     */
     public function testTaskToggleOff()
     {
         $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
@@ -165,10 +180,41 @@ class TaskControllerTest extends WebTestCase
         static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
     }
 
+    /**
+     * Testing the task toggle on by admin
+     */
     public function testTaskToggleOn()
     {
         $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+        $crawler = $this->client->followRedirect();
+
+        static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
+    }
+
+    /**
+     * Testing the task toggle off by user
+     */
+    public function testTaskToggleOffByUser()
+    {
+        $this->client->request('GET', '/tasks/157/toggle', array(), array(), array(
+            'PHP_AUTH_USER' => 'alaina04',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+        $crawler = $this->client->followRedirect();
+
+        static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
+    }
+
+    /**
+     * Testing the task toggle on by user
+     */
+    public function testTaskToggleOnByUser()
+    {
+        $this->client->request('GET', '/tasks/157/toggle', array(), array(), array(
+            'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
         $crawler = $this->client->followRedirect();
