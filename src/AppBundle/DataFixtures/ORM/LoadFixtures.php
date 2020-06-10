@@ -2,11 +2,13 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use AppBundle\Entity\User;
 use Nelmio\Alice\Fixtures;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LoadFixtures implements FixtureInterface
+class LoadFixtures extends Controller implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -41,5 +43,14 @@ class LoadFixtures implements FixtureInterface
         $key = array_rand($genera);
 
         return $genera[$key];
+    }
+
+
+    public function password()
+    {
+        $user = new User();
+        $password = $this->get('security.password_encoder')->encodePassword($user, 'pass');
+
+        return $password;
     }
 }

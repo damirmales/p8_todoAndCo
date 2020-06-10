@@ -1,13 +1,13 @@
 AppBundle\Entity\User:
-  user_{1..10}:
-    username: <username()>
-    email: <email()>
-    role: <numberBetween(100, 100000)>
-    password: <sentence()>
+  user_{1..3}:
+    username (unique): <username()>
+    email (unique): <email()>
+    role: ROLE_USER
+    password: <password()>
 
 
 AppBundle\Entity\Task:
-  task_{1..20}:
+  task_{1..6}:
     title: <title()>
     content: <paragraph()>
     isDone: <numberBetween(0, 1)>
