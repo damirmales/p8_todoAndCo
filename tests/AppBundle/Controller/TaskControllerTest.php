@@ -2,8 +2,6 @@
 
 namespace Tests\AppBundle\Controller;
 
-use AppBundle\Entity\Task;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
@@ -13,11 +11,11 @@ class TaskControllerTest extends WebTestCase
     /**
      *
      */
-    public function setUp():void
+    public function setUp(): void
     {
         $this->client = static::createClient([], [
             'PHP_AUTH_USER' => 'alaina04',
-            'PHP_AUTH_PW'   => 'pass',
+            'PHP_AUTH_PW' => 'pass',
         ]);
     }
 
@@ -37,7 +35,7 @@ class TaskControllerTest extends WebTestCase
     {
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'pass',
+            'PHP_AUTH_PW' => 'pass',
         ]);
         $crawler = $client->request('GET', '/tasks');
         static::assertEquals(1, $crawler->filter('a[href="/tasks/create"]')->count());
@@ -50,7 +48,7 @@ class TaskControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/tasks/create', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
-            'PHP_AUTH_PW'   => 'pass',
+            'PHP_AUTH_PW' => 'pass',
         ));
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'tachetest';
@@ -68,7 +66,7 @@ class TaskControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/tasks/create', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'pass',
+            'PHP_AUTH_PW' => 'pass',
         ));
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'tachetest';
@@ -84,7 +82,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskEditByUser()
     {
-        $crawler = $this->client->request('GET', '/tasks/138/edit', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tasks/146/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -101,9 +99,9 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskEditByAdmin()
     {
-        $crawler = $this->client->request('GET', '/tasks/1/edit', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tasks/129/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'admin',
+            'PHP_AUTH_PW' => 'pass',
         ));
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'test';
@@ -111,5 +109,70 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         static::assertEquals(1, $crawler->filter('html:contains("modifiée.")')->count());
+    }
+
+    public function testTaskEditByUserNoOwner()
+    {
+        $crawler = $this->client->request('GET', '/tasks/129/edit', array(), array(), array(
+            'PHP_AUTH_USER' => 'alaina04',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+        //$crawler = $this->client->followRedirect();
+        static::assertEquals(0, $crawler->filter('html:contains("modifier")')->count());
+    }
+
+    public function testTaskDelete()
+    {
+        $this->client->request('GET', '/tasks/145/delete', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+
+        $crawler = $this->client->followRedirect();
+        static::assertEquals(1, $crawler->filter('html:contains("La tâche a bien été supprimée")')->count());
+    }
+
+    public function testTaskDeleteByUserNoOwner()
+    {
+        $this->client->request('GET', '/tasks/129/delete', array(), array(), array(
+            'PHP_AUTH_USER' => 'alaina04',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+
+        $crawler = $this->client->followRedirect();
+        static::assertEquals(1, $crawler->filter('html:contains("La tâche ne vous appartient pas")')->count());
+    }
+
+    public function testTaskDeleteByUser()
+    {
+        $this->client->request('GET', '/tasks/141/delete', array(), array(), array(
+            'PHP_AUTH_USER' => 'alaina04',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+
+        $crawler = $this->client->followRedirect();
+        static::assertEquals(1, $crawler->filter('html:contains("La tâche a bien été supprimée")')->count());
+    }
+
+    public function testTaskToggleOff()
+    {
+        $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+        $crawler = $this->client->followRedirect();
+
+        static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
+    }
+
+    public function testTaskToggleOn()
+    {
+        $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'pass',
+        ));
+        $crawler = $this->client->followRedirect();
+
+        static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
     }
 }
