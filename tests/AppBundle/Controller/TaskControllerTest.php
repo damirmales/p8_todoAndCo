@@ -82,7 +82,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskEditByUser()
     {
-        $crawler = $this->client->request('GET', '/tasks/146/edit', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tasks/157/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -99,7 +99,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskEditByAdmin()
     {
-        $crawler = $this->client->request('GET', '/tasks/129/edit', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tasks/162/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'pass',
         ));
