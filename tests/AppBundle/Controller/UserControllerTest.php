@@ -25,7 +25,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserListUser()
     {
-        $crawler = $this->client->request('GET', '/users');
+        $this->client->request('GET', '/users');
         static::assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -47,7 +47,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserCreateByUser()
     {
-        $crawler = $this->client->request('GET', '/users/create', array(), array(), array(
+        $this->client->request('GET', '/users/create', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -81,7 +81,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserEditByUser()
     {
-        $crawler = $this->client->request('GET', '/users/72/edit', array(), array(), array(
+        $this->client->request('GET', '/users/72/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
