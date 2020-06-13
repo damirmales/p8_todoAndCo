@@ -13,7 +13,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction()
+    public function listTasks()
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
     }
@@ -21,7 +21,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createTask(Request $request)
     {
         $user = $this->getUser();
         $task = new Task();
@@ -46,7 +46,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function editTask(Task $task, Request $request)
     {
         $form = $this->createForm(TaskType::class, $task);
 
@@ -74,7 +74,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTask(Task $task)
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
@@ -87,7 +87,7 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTask(Task $task)
     {
         if(($task->getUser()->getUsername() == "lambda") &&  ($this->getUser()->getRole() === "ROLE_ADMIN" )){ //check if the task is owned by a default user
             $em = $this->getDoctrine()->getManager();
