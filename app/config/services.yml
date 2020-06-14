@@ -3,7 +3,19 @@
 parameters:
 #    parameter_name: value
 
-services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+    doctrine.user_listener:
+        class: AppBundle\EventListener\EncodePassListener
+        arguments: ~
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
