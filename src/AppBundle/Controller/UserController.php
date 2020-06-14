@@ -3,14 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\EventListener\EncodePassListener;
 use AppBundle\Form\UserType;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends Controller
 {
@@ -38,8 +35,6 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-           // $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-           // $user->setPassword($password)
                 $user->setRole($form->getData()->getRole());
 
             $em->persist($user);
