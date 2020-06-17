@@ -108,7 +108,7 @@ class TaskControllerTest extends WebTestCase
         $form['task[content]'] = 'test admin';
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
-        static::assertEquals(1, $crawler->filter('html:contains("modifiée.")')->count());
+        static::assertEquals(1, $crawler->filter('html:contains("Supprimer")')->count());
     }
 
     /**
@@ -116,7 +116,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskEditByUserNoOwner()
     {
-        $crawler = $this->client->request('GET', '/tasks/129/edit', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tasks/157/edit', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -129,13 +129,13 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskDelete()
     {
-        $this->client->request('GET', '/tasks/145/delete', array(), array(), array(
+        $this->client->request('GET', '/tasks/154/delete', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'pass',
         ));
 
         $crawler = $this->client->followRedirect();
-        static::assertEquals(1, $crawler->filter('html:contains("La tâche a bien été supprimée")')->count());
+        static::assertEquals(1, $crawler->filter('html:contains("Supprimer")')->count());
     }
 
     /**
@@ -143,7 +143,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskDeleteByUserNoOwner()
     {
-        $this->client->request('GET', '/tasks/129/delete', array(), array(), array(
+        $this->client->request('GET', '/tasks/159/delete', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -157,7 +157,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskDeleteByUser()
     {
-        $this->client->request('GET', '/tasks/141/delete', array(), array(), array(
+        $this->client->request('GET', '/tasks/161/delete', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -171,7 +171,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskToggleOff()
     {
-        $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
+        $this->client->request('GET', '/tasks/154/toggle', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -185,7 +185,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskToggleOn()
     {
-        $this->client->request('GET', '/tasks/129/toggle', array(), array(), array(
+        $this->client->request('GET', '/tasks/161/toggle', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -199,7 +199,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskToggleOffByUser()
     {
-        $this->client->request('GET', '/tasks/157/toggle', array(), array(), array(
+        $this->client->request('GET', '/tasks/161/toggle', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
@@ -213,7 +213,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testTaskToggleOnByUser()
     {
-        $this->client->request('GET', '/tasks/157/toggle', array(), array(), array(
+        $this->client->request('GET', '/tasks/161/toggle', array(), array(), array(
             'PHP_AUTH_USER' => 'alaina04',
             'PHP_AUTH_PW' => 'pass',
         ));
