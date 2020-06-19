@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -93,6 +94,8 @@ class Task
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -109,6 +112,8 @@ class Task
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**
