@@ -43,19 +43,15 @@ class DataFixtures extends Fixture
         $manager->persist($anonym);
 
         $allUsers = array($anonym);
-
         $password = 'pass';
         for ($i = 0; $i < 2; $i++) {
             $user = new User();
             array_push($allUsers, $user);
-            $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $password);
             //add product to Customer
             $user->setUsername('customer' . $i)
                 ->setEmail('email_' . $i . '@todo.fr')
                 ->setRole('ROLE_USER')
-                ->setPassword($encoded);
-
+                ->setPassword($password);
             $manager->persist($user);
         }
 
