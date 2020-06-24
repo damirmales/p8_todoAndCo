@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Table("user")
@@ -129,7 +130,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getTasks()
     {
@@ -137,9 +138,9 @@ class User implements UserInterface
     }
 
     /**
-     * @param mixed $tasks
+     * @param Collection $tasks
      */
-    public function setTasks($tasks)
+    public function setTasks(Collection $tasks)
     {
         $this->tasks = $tasks;
 
@@ -168,7 +169,7 @@ class User implements UserInterface
      * @param Task $task
      * @return $this
      */
-    public function addTasks(Task $task)
+    public function addTask(Task $task)
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks[] = $task;
@@ -180,7 +181,7 @@ class User implements UserInterface
      * @param Task $task
      * @return $this
      */
-    public function removeUsers(Task $task)
+    public function removeTask(Task $task)
     {
         if ($this->tasks->contains($task)) {
             $this->tasks->removeElement($task);

@@ -20,6 +20,10 @@
         </testsuite>
     </testsuites>
 
+    <logging>
+        <log type="coverage-html" target="web/test-coverage/v1.0/" />
+    </logging>
+
     <filter>
         <whitelist>
             <directory>src</directory>
