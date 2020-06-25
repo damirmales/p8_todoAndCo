@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Service\UserManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,10 +26,10 @@ class UserController extends Controller
      * @Route("/users/create", name="user_create")
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function createUser(Request $request)
+    public function createUser(Request $request, EntityManagerInterface $manager)
     {
         $user = new User();
-
+        $userManager = new UserManager($manager);
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -35,10 +37,10 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-                $user->setRole($form->getData()->getRole());
-
-            $em->persist($user);
-            $em->flush();
+//            $user->setRole($form->getData()->getRole());
+//            $em->persist($user);
+//            $em->flush();
+            $userManager->setUserRole($form->getData()->getRole(), $user);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 

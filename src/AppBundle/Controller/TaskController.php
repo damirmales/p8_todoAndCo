@@ -3,7 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
+use AppBundle\Entity\User;
 use AppBundle\Form\TaskType;
+use AppBundle\Service\TaskManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,19 +25,19 @@ class TaskController extends Controller
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createTask(Request $request)
+    public function createTask(Request $request, EntityManagerInterface $manager)
     {
         $user = $this->getUser();
         $task = new Task();
+
+        $taskManager = new TaskManager($manager);
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $task->setUser($user);
-            $em->persist($task);
-            $em->flush();
+
+            $taskManager->createTask($task, $user);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -89,7 +93,7 @@ class TaskController extends Controller
      */
     public function deleteTask(Task $task)
     {
-        if(($task->getUser()->getUsername() == "lambda") &&  ($this->getUser()->getRole() === "ROLE_ADMIN" )){ //check if the task is owned by a default user
+        if (($task->getUser()->getUsername() == "lambda") && ($this->getUser()->getRole() === "ROLE_ADMIN")) { //check if the task is owned by a default user
             $em = $this->getDoctrine()->getManager();
             $em->remove($task);
             $em->flush();
