@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use AppBundle\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
@@ -124,10 +125,11 @@ class TaskControllerTest extends WebTestCase
         static::assertEquals(0, $crawler->filter('html:contains("modifier")')->count());
     }
 
+
     /**
      * Testing the task deletion as a admin
      */
-    public function testTaskDelete()
+    public function testTaskDeleteByAdmin()
     {
         $this->client->request('GET', '/tasks/154/delete', array(), array(), array(
             'PHP_AUTH_USER' => 'admin',
@@ -220,5 +222,16 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->followRedirect();
 
         static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
+    }
+
+    public function testToggleTask()
+    {
+        $client = static::createClient(array(), array('PHP_AUTH_USER' => 'admin', 'PHP_AUTH_PW' => 'admin'));
+        $crawler = $client->request('GET', '/tasks');
+        $form = $crawler->selectButton('Marquer comme faite')->last()->form();
+        $client->submit($form);
+
+        $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
