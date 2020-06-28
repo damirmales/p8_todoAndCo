@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends Controller
 {
     /**
-     * @Route("/users", name="user_list")
+     * @Route("/users",                      name="user_list")
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listUser()
@@ -22,9 +22,14 @@ class UserController extends Controller
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
     }
 
+
     /**
-     * @Route("/users/create", name="user_create")
+     * @Route("/users/create",               name="user_create")
      * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createUser(Request $request, EntityManagerInterface $manager)
     {
@@ -46,8 +51,12 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/users/{id}/edit",            name="user_edit")
      * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @param User $user
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editUser(User $user, Request $request)
     {
