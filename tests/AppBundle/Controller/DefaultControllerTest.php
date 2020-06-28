@@ -13,14 +13,13 @@ class DefaultControllerTest extends WebTestCase
     public function setUp():void
     {
         $this->client = static::createClient([], [
-            'PHP_AUTH_USER' => 'alaina04',
-            'PHP_AUTH_PW'   => 'pass',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'admin',
         ]);
     }
 
     public function testIndex()
     {
-
         $this->client ->request('GET', '/');
 
         static::assertEquals(200, $this->client ->getResponse()->getStatusCode());
