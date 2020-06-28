@@ -66,7 +66,7 @@ class UserTest extends TestCase
     public function testTasks()
     {
         $tasks = new ArrayCollection();
-        // $this->user->setTasks($tasks);
+        $this->user->setTasks($tasks);
         $this->assertEquals($this->user->getTasks(), $tasks);
     }
 
@@ -81,7 +81,6 @@ class UserTest extends TestCase
 
     public function testAddTaskIsOk()
     {
-
         $this->user->setTasks($this->tasks);
         $this->user->addTask($this->task);
 
@@ -90,7 +89,6 @@ class UserTest extends TestCase
 
     public function testRemoveTaskIsOk()
     {
-
         $this->user->setTasks($this->tasks);
         $this->user->addTask($this->task);
 
@@ -109,8 +107,7 @@ class UserTest extends TestCase
      */
     public function testSalt()
     {
-        $salt= $this->user->getSalt();
-        self::assertNull( $salt );
+        $salt = $this->user->getSalt();
+        self::assertNull($salt);
     }
-
 }
