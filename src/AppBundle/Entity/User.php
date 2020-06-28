@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Table("user")
  * @ORM\Entity
  * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface
 {

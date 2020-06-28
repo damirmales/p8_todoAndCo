@@ -47,7 +47,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testUserCreateByUser()
     {
-        $this->client->request('GET', '/users');
+        $this->client->request('GET', '/users/create');
         static::assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
 
@@ -88,18 +88,17 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient([], ['PHP_AUTH_USER' => 'admin', 'PHP_AUTH_PW' => 'admin']);
 
-        $crawler = $client->request('GET', '/users');
-        $link = $crawler->selectLink('Edit')->last()->link();
-        $crawler = $client->click($link);
+        $crawler = $client->request('GET', '/users/90/edit');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $form['user[username]'] = 'newuser';
+        $form['user[username]'] = 'newuser' . rand(0, 10000);
         $form['user[password][first]'] = 'pass';
         $form['user[password][second]'] = 'pass';
-        $form['user[email]'] = 'newuser@fr.fr';
+        $form['user[email]'] = 'newuser' . rand(0, 10000) . '@fr.fr';
         $form['user[role]'] = 'ROLE_ADMIN';
         $client->submit($form);
-
-        $this->assertTrue($client->getResponse()->isSuccessful(), 'L\'utilisateur a bien été modifié');
+        $crawler = $client->followRedirect();
+        static::assertEquals(1, $crawler->filter(
+            'html:contains("a bien été modifié")')->count());
     }
 }
