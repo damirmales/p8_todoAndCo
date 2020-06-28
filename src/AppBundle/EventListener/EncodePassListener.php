@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class EncodePassListener
 {
-   private $passwordEncoder;
+    private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -25,9 +25,11 @@ class EncodePassListener
         }
 
         $args->getObjectManager();
-        $entity->setPassword($this->passwordEncoder->encodePassword(
-            $entity,
-            $entity->getPassword()
-        ));
+        $entity->setPassword(
+            $this->passwordEncoder->encodePassword(
+                $entity,
+                $entity->getPassword()
+            )
+        );
     }
 }
