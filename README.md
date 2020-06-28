@@ -17,6 +17,8 @@ Composer install
 
 php bin/console doctrine:database:create
 
+php bin/console doctrine:schema:update --force
+
 ## Add fixtures
 
 php bin/console doctrine:fixtures:load
