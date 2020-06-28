@@ -16,3 +16,6 @@
 /vendor/
 /web/bundles/
 /count())
+/tests/AppBundle/_css/style.css
+/tests/AppBundle/_css/custom.css
+/tests/AppBundle/_js/file.js
