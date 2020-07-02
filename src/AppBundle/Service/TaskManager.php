@@ -3,10 +3,8 @@
 
 namespace AppBundle\Service;
 
-
 use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
 
 class TaskManager
 {

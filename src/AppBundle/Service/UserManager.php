@@ -3,8 +3,6 @@
 
 namespace AppBundle\Service;
 
-
-use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
 
 class UserManager

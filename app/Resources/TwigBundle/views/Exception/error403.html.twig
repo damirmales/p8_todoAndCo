@@ -1,0 +1,13 @@
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+   {% block header_title %}{% endblock %}
+    {% block header_img %} {% endblock %}
+
+{% block body %}
+    <h1>Acces non autorisé</h1>
+
+    <p>
+        Vous n'êtes pas autorisé à accéder à cette page
+    </p>
+    <a href="{{ path('homepage') }}">Retourner à la homepage</a>.
+{% endblock %}

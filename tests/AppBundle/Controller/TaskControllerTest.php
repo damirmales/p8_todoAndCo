@@ -192,7 +192,7 @@ public function useUser(){
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer non terminée')->last()->form();
+        $crawler->selectButton('Marquer non terminée')->form();
         static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
     }
 
@@ -203,19 +203,9 @@ public function useUser(){
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer comme faite')->last()->form();
+        $crawler->selectButton('Marquer comme faite')->form();
 
         static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
     }
 
-    public function testToggleTaskByAdmin()
-    {
-        $client = $this->useAdmin();
-        $crawler = $client->request('GET', '/tasks');
-        $form = $crawler->selectButton('Marquer comme faite')->last()->form();
-        $client->submit($form);
-
-        $client->followRedirect();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }
 }

@@ -1,0 +1,14 @@
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+   {% block header_title %}{% endblock %}
+    {% block header_img %} {% endblock %}
+
+{% block body %}
+    <h1>Page inconnue</h1>
+
+    <p>
+        La page demandée est introuvable
+    </p>
+    <a href="{{ path('homepage') }}">Retourner à la homepage</a>.
+{% endblock %}
