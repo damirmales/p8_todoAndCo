@@ -26,7 +26,7 @@ git commit -m “brève mention des modifications”
 ### Envoyer les modifications sur le dépôt Github
 git  push origin NomDeLaBrancheCourante
 ### Créer la Pull Request
-### Suite à la validation appliquez (merge) la pull request sur la branche master
+### Suite à la validation fusionner (merge) la pull request sur la branche master
 ## Gardons les bonnes pratiques 
 ### PSR (PHP Standards Recommendation)
 Au minimum le code généré devra suivre les recommandations de la PSR-1
