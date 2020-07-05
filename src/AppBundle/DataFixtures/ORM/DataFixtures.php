@@ -42,7 +42,7 @@ class DataFixtures extends Fixture
             ->setRole('ROLE_USER');
         $manager->persist($anonym);
 
-        $allUsers = array($anonym);
+        $allUsers = array($anonym,$admin);
         $password = 'pass';
         for ($i = 0; $i < 2; $i++) {
             $user = new User();
@@ -55,13 +55,14 @@ class DataFixtures extends Fixture
             $manager->persist($user);
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $task = new Task();
-            $randUser = shuffle($allUsers); //define a randomly user to add to a task
+            //$randUser = shuffle($allUsers); //define a randomly user to add to a task
             //add User to Task
-            $task->setTitle('bill_' . $i)
-                ->setContent('hobbes_' . $i)
-                ->setUser($allUsers[$randUser]);
+            $task->setTitle('tâche' . $i)
+                ->setContent('cette tâche'. $i.' à faire' )
+                ->setUser($admin)
+                ->toggle(rand(0,1));
             $manager->persist($task);
         }
         $manager->flush();

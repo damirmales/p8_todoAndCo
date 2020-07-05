@@ -97,7 +97,7 @@ public function useUser(){
     public function testTaskEditByUser()
     {
         $client = $this->useUser();
-        $crawler = $client->request('GET', '/tasks/191/edit');
+        $crawler = $client->request('GET', '/tasks/6/edit');
         $form = $crawler->selectButton( 'Modifier' )->form();
         $form['task[title]'] = 'essai';
         $form['task[content]'] = 'essai user sustomer0';
@@ -112,7 +112,7 @@ public function useUser(){
     public function testTaskEditByAdmin()
     {
         $client = $this->useAdmin();
-        $crawler = $client->request('GET', '/tasks/191/edit');
+        $crawler = $client->request('GET', '/tasks/1/edit');
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'test';
         $form['task[content]'] = 'test admin';
@@ -131,7 +131,7 @@ public function useUser(){
             'PHP_AUTH_USER' => 'customer1',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $crawler = $client->request('GET', '/tasks/191/edit');
+        $crawler = $client->request('GET', '/tasks/1/edit');
         $form = $crawler->filter('form')->form();
         $form['task[title]'] = 'test';
         $form['task[content]'] = 'test customer1';

@@ -88,7 +88,7 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient([], ['PHP_AUTH_USER' => 'admin', 'PHP_AUTH_PW' => 'admin']);
 
-        $crawler = $client->request('GET', '/users/90/edit');
+        $crawler = $client->request('GET', '/users/2/edit');
 
         $form = $crawler->selectButton('Modifier')->form();
         $form['user[username]'] = 'newuser' . rand(0, 10000);
