@@ -8,8 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser|null
+     */
     private $client = null;
 
+    /**
+     *
+     */
     public function setUp():void
     {
         $this->client = static::createClient([], [
@@ -18,6 +24,9 @@ class DefaultControllerTest extends WebTestCase
         ]);
     }
 
+    /**
+     *
+     */
     public function testIndex()
     {
         $this->client ->request('GET', '/');

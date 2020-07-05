@@ -8,6 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 
+/**
+ * Class UserTest
+ * @package Tests\AppBundle\Entity
+ */
 class UserTest extends TestCase
 {
     /**

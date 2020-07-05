@@ -5,8 +5,15 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
 
+/**
+ * Class UserManager
+ * @package AppBundle\Service
+ */
 class UserManager
 {
+    /**
+     * @var
+     */
     private $entityManager;
 
     public function __construct($manager)
@@ -14,6 +21,10 @@ class UserManager
         $this->entityManager = $manager;
     }
 
+    /**
+     * @param $role
+     * @param User $user
+     */
     public function setUserRole($role, User $user)
     {
         $user->setRole($role);

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 $loader = require __DIR__.'/../app/autoload.php';
 include_once __DIR__.'/../var/bootstrap.php.cache';
 //-->added
-$kernel = new AppKernel('prod', false);
+$kernel = new AppKernel('prod', true);
 //Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
 Request::setTrustedProxies(['192.0.0.1', '10.0.0.0/8'], Request::HEADER_X_FORWARDED_ALL);
 $request = Request::createFromGlobals();

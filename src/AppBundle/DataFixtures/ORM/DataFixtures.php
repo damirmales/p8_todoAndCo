@@ -57,8 +57,7 @@ class DataFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
             $task = new Task();
-            //$randUser = shuffle($allUsers); //define a randomly user to add to a task
-            //add User to Task
+           //add User to Task
             $task->setTitle('tâche' . $i)
                 ->setContent('cette tâche'. $i.' à faire' )
                 ->setUser($admin)

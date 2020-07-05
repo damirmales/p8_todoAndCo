@@ -8,19 +8,17 @@ use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class TaskControllerTest
+ * @package Tests\AppBundle\Controller
+ */
 class TaskControllerTest extends WebTestCase
 {
-//    private $client = null;
-//
-//    /**
-//     * Create HTTP client
-//     */
-//    public function setUp(): void
-//    {
-//        $this->client = static::createClient();
-//    }
 
-public function useUser(){
+    /**
+     * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    public function useUser(){
 
     $client = static::createClient([], [
         'PHP_AUTH_USER' => 'customer0',
@@ -29,6 +27,9 @@ public function useUser(){
     return $client;
 }
 
+    /**
+     * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
     public function useAdmin(){
 
         $client = static::createClient([], [
@@ -97,29 +98,30 @@ public function useUser(){
     public function testTaskEditByUser()
     {
         $client = $this->useUser();
-        $crawler = $client->request('GET', '/tasks/6/edit');
+        $crawler = $client->request('GET', '/tasks/2/edit');
         $form = $crawler->selectButton( 'Modifier' )->form();
         $form['task[title]'] = 'essai';
-        $form['task[content]'] = 'essai user sustomer0';
+        $form['task[content]'] = 'essai user customer0';
         $client->submit($form);
-        $crawler = $client->followRedirect();
-        static::assertEquals(1, $crawler->filter('html:contains("modifiée.")')->count());
+        $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
     }
 
     /**
-     * Testing the task edition as a admin
+     * Testing the task edition as admin
      */
     public function testTaskEditByAdmin()
     {
         $client = $this->useAdmin();
-        $crawler = $client->request('GET', '/tasks/1/edit');
+        $crawler = $client->request('GET', '/tasks/2/edit');
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'test';
         $form['task[content]'] = 'test admin';
         $client->submit($form);
         $crawler = $client->followRedirect();
         static::assertEquals(1, $crawler->filter(
-            'html:contains("La tâche ne vous appartient pas.")')->count());
+            'html:contains("modifiée")')->count());
     }
 
     /**
@@ -131,7 +133,7 @@ public function useUser(){
             'PHP_AUTH_USER' => 'customer1',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $crawler = $client->request('GET', '/tasks/1/edit');
+        $crawler = $client->request('GET', '/tasks/2/edit');
         $form = $crawler->filter('form')->form();
         $form['task[title]'] = 'test';
         $form['task[content]'] = 'test customer1';

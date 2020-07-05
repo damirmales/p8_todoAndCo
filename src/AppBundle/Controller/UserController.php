@@ -20,7 +20,8 @@ class UserController extends AbstractController
      */
     public function listUser()
     {
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+        return $this->render('user/list.html.twig',
+            ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
     }
 
 
@@ -65,7 +66,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-//            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $this->getDoctrine()->getManager()->flush();
