@@ -35,5 +35,5 @@ Au minimum le code généré devra suivre les recommandations de la PSR-1
 Au PSR-1 on ajoutera le PSR-12 qui vient le compléter suite aux évolutions du langage PHP ces dernières années.
 <https://www.php-fig.org/psr/psr-12/>
 ### Symfony Best Practices
-On veillera enfin à appliquer les recommandations de la version Symfony dans laquelle le projet a été mis à jour soit la 4.4
+On veillera enfin à appliquer les bonnes pratiques de la version Symfony dans laquelle le projet a été mis à jour, soit la 4.4
 <https://symfony.com/doc/4.4/best_practices.html>
