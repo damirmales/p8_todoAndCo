@@ -31,6 +31,7 @@ git  push origin NomDeLaBrancheCourante
 ### PSR (PHP Standards Recommendation)
 Au minimum le code généré devra suivre les recommandations de la PSR-1
 <https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md>
+
 Au PSR-1 on ajoutera le PSR-12 qui vient le compléter suite aux évolutions du langage PHP ces dernières années.
 <https://www.php-fig.org/psr/psr-12/>
 ### Symfony Best Practices
