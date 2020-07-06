@@ -22,7 +22,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
 
-$kernel = new AppKernel('dev', false);
+$kernel = new AppKernel('dev', true);
 //$kernel->loadClassCache();
 Request::setTrustedProxies(['192.0.0.1', '10.0.0.0/8'], Request::HEADER_X_FORWARDED_ALL);//added
 $request = Request::createFromGlobals();
