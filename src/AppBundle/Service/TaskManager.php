@@ -8,6 +8,7 @@ use AppBundle\Entity\User;
 
 /**
  * Class TaskManager
+ *
  * @package AppBundle\Service
  */
 class TaskManager

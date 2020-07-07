@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 
 /**
  * Class UserManager
+ *
  * @package AppBundle\Service
  */
 class UserManager

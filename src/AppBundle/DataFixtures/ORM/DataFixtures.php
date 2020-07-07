@@ -57,11 +57,11 @@ class DataFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
             $task = new Task();
-           //add User to Task
+            //add User to Task
             $task->setTitle('tâche' . $i)
-                ->setContent('cette tâche'. $i.' à faire' )
+                ->setContent('cette tâche'. $i.' à faire')
                 ->setUser($admin)
-                ->toggle(rand(0,1));
+                ->toggle(rand(0, 1));
             $manager->persist($task);
         }
         $manager->flush();
