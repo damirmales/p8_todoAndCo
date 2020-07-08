@@ -42,28 +42,52 @@ class DataFixtures extends Fixture
             ->setRole('ROLE_USER');
         $manager->persist($anonym);
 
+        // create users
         $allUsers = array($anonym,$admin);
         $password = 'pass';
         for ($i = 0; $i < 2; $i++) {
-            $user = new User();
-            array_push($allUsers, $user);
-            //add product to Customer
-            $user->setUsername('customer' . $i)
+            ${'user'.$i} = new User();
+            array_push($allUsers,  ${'user'.$i});
+
+            ${'user'.$i}->setUsername('customer' . $i)
                 ->setEmail('email_' . $i . '@todo.fr')
                 ->setRole('ROLE_USER')
                 ->setPassword($password);
-            $manager->persist($user);
+            $manager->persist(${'user'.$i});
         }
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $task = new Task();
-            //add User to Task
-            $task->setTitle('tâche' . $i)
-                ->setContent('cette tâche'. $i.' à faire')
+            //add admin to Task
+            $task->setTitle('tâche-admin' . $i)
+                ->setContent('cette tâche'. $i.' à faire' )
                 ->setUser($admin)
-                ->toggle(rand(0, 1));
+                ->toggle(rand(0,1));
             $manager->persist($task);
         }
+
+        for ($i = 0; $i < 2; $i++) {
+            $task = new Task();
+            //add anonym user to Task
+            $task->setTitle('tâche existante' . $i)
+                ->setContent('cette tâche'. $i.' à faire' )
+                ->setUser($anonym)
+                ->toggle(rand(0,1))
+            ;
+            $manager->persist($task);
+        }
+
+        for ($i = 0; $i < 2; $i++) {
+            $task = new Task();
+            //add User to Task
+            $task->setTitle('tâche_user' . $i)
+                ->setContent('cette tâche'. $i.' à faire' )
+                ->setUser(${'user'.$i})
+                ->toggle(rand(0,1))
+            ;
+            $manager->persist($task);
+        }
+
         $manager->flush();
     }
 }

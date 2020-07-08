@@ -95,7 +95,7 @@ class UserControllerTest extends WebTestCase
         $form['user[password][first]'] = 'pass';
         $form['user[password][second]'] = 'pass';
         $form['user[email]'] = 'newuser' . rand(0, 10000) . '@fr.fr';
-        $form['user[role]'] = 'ROLE_ADMIN';
+        $form['user[role]'] = 'ROLE_USER';
         $client->submit($form);
         $crawler = $client->followRedirect();
         static::assertEquals(1, $crawler->filter(
