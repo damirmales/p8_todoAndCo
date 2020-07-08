@@ -2,11 +2,9 @@
 
 namespace Tests\AppBundle\Controller;
 
-use AppBundle\Entity\Task;
-
-use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class TaskControllerTest
@@ -20,12 +18,12 @@ class TaskControllerTest extends WebTestCase
      */
     public function useUser(){
 
-    $client = static::createClient([], [
-        'PHP_AUTH_USER' => 'customer0',
-        'PHP_AUTH_PW' => 'pass',
-    ]);
-    return $client;
-}
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'customer0',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        return $client;
+    }
 
     /**
      * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
@@ -93,28 +91,12 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     * Testing the task edition as a user
-     */
-    public function testTaskEditByUser()
-    {
-        $client = $this->useUser();
-        $crawler = $client->request('GET', '/tasks/2/edit');
-        $form = $crawler->selectButton( 'Modifier' )->form();
-        $form['task[title]'] = 'essai';
-        $form['task[content]'] = 'essai user customer0';
-        $client->submit($form);
-        $client->followRedirect();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-    }
-
-    /**
      * Testing the task edition as admin
      */
     public function testTaskEditByAdmin()
     {
         $client = $this->useAdmin();
-        $crawler = $client->request('GET', '/tasks/2/edit');
+        $crawler = $client->request('GET', '/tasks/1/edit');
         $form = $crawler->filter('button[type="submit"]')->form();
         $form['task[title]'] = 'test';
         $form['task[content]'] = 'test admin';
@@ -133,14 +115,14 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'customer1',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $crawler = $client->request('GET', '/tasks/2/edit');
-        $form = $crawler->filter('form')->form();
-        $form['task[title]'] = 'test';
-        $form['task[content]'] = 'test customer1';
+        $crawler = $client->request('GET', '/tasks/3/edit');
+        $form = $crawler->filter('button[type="submit"]')->form();
+        $form['task[title]'] = 'custom';
+        $form['task[content]'] = 'test custom';
         $client->submit($form);
         $crawler = $client->followRedirect();
 
-        static::assertEquals(0, $crawler->filter('html:contains("modifier")')->count());
+        static::assertEquals(1, $crawler->filter('html:contains("La tâche ne vous appartient pas")')->count());
     }
 
 
@@ -154,7 +136,7 @@ class TaskControllerTest extends WebTestCase
         $form = $crawler->selectButton( 'Supprimer' )->last()->form();
         $client->submit( $form );
         $crawler = $client->followRedirect();
-       static::assertEquals(1, $crawler->filter('html:contains("Supprimer")')->count());
+        static::assertEquals(1, $crawler->filter('html:contains("Supprimer")')->count());
     }
 
     /**
@@ -166,12 +148,10 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'customer1',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $crawler = $client->request('GET', '/tasks');
-        $form = $crawler->selectButton( 'Supprimer' )->last()->form();
-        $client->submit( $form );
-        $crawler = $client->followRedirect();
-        static::assertEquals(1, $crawler->filter(
-            'html:contains("La tâche ne vous appartient pas.")')->count());
+        $crawler = $client->request('GET', '/tasks/3/delete');
+
+        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+
     }
 
     /**
@@ -194,7 +174,7 @@ class TaskControllerTest extends WebTestCase
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer non terminée')->form();
+        $crawler->selectButton('Marquer non terminée')->last()->form();
         static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
     }
 
@@ -205,7 +185,7 @@ class TaskControllerTest extends WebTestCase
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer comme faite')->form();
+        $crawler->selectButton('Marquer comme faite')->last()->form();
 
         static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
     }
