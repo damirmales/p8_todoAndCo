@@ -174,7 +174,8 @@ class TaskControllerTest extends WebTestCase
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer non terminée')->last()->form();
+        $form = $crawler->selectButton('Marquer non terminée')->last()->form();
+        $client->submit( $form );
         static::assertSame(1, $crawler->filter('html:contains("Marquer comme faite")')->count());
     }
 
@@ -185,8 +186,8 @@ class TaskControllerTest extends WebTestCase
     {
         $client = $this->useUser();
         $crawler = $client->request('GET', '/tasks');
-        $crawler->selectButton('Marquer comme faite')->last()->form();
-
+        $form = $crawler->selectButton('Marquer comme faite')->last()->form();
+        $client->submit( $form );
         static::assertSame(1, $crawler->filter('html:contains("Marquer non terminée")')->count());
     }
 
