@@ -26,7 +26,7 @@ git commit -m “brève mention des modifications”
 ### Envoyer les modifications sur le dépôt Github
 git  push origin NomDeLaBrancheCourante
 ### Créer la Pull Request
-### Vérifier le code avec l'analyse fournit par Codacy  
+### Vérifier le code avec l'analyse fourni par Codacy  
 https://app.codacy.com/manual/d.males/p8_todoAndCo/dashboard
 ### Suite à la validation, fusionner (merge) la pull request sur la branche master
 ## Gardons les bonnes pratiques 
